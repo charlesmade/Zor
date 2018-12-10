@@ -68,9 +68,11 @@ class Dispatcher
     public function dispatch(Request $request,Response $response):void
     {
         $path = UrlParser::pathInfo($request->getUri()->getPath());
+
         if($this->router instanceof GroupCountBased){
             $handler = null;
             $routeInfo = $this->router->dispatch($request->getMethod(),$path);
+            d($this->router,$routeInfo,$request->getMethod(),$path);
             if($routeInfo !== false){
                 switch ($routeInfo[0]) {
                     case \FastRoute\Dispatcher::NOT_FOUND:{
@@ -153,6 +155,7 @@ class Dispatcher
             $className = '';
             for ($i=0 ;$i<$maxDepth;$i++){
                 $className = $className."\\".ucfirst($list[$i] ?: 'Index');//为一级控制器Index服务
+
             }
             if(class_exists($this->controllerNameSpacePrefix.$className)){
                 //尝试获取该class后的actionName

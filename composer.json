@@ -13,7 +13,8 @@
     "autoload": {
         "psr-4": {
             "Zor\\": "src/",
-            "Lib\\": "lib/"
+            "Lib\\": "lib/",
+            "App\\": "app"
         }
     }
 }
