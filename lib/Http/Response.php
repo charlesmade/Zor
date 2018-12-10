@@ -28,7 +28,7 @@ class Response extends MessageResponse
     {
         $this->response = $response;
         parent::__construct();
-        $this->withAddedHeader('Server','EasySwoole');
+        $this->withAddedHeader('Server','ZorServer');
     }
 
     function end($status = self::STATUS_LOGICAL_END){
@@ -56,6 +56,7 @@ class Response extends MessageResponse
                 $this->response->cookie($cookie->getName(),$cookie->getValue(),$cookie->getExpire(),$cookie->getPath(),$cookie->getDomain(),$cookie->isSecure(),$cookie->isHttpOnly());
             }
             $write = $this->getBody()->__toString();
+
             if($write !== ''){
                 $this->response->write($write);
             }

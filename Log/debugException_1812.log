@@ -15,3 +15,7 @@
 18-12-10 18:39:14:Exception at file[/app/zor/bin/bin.php] line[31] message:[swoole exit.]
 18-12-10 18:41:36:Exception at file[/app/zor/bin/bin.php] line[31] message:[swoole exit.]
 18-12-10 18:42:25:Exception at file[/app/zor/lib/Http/Dispatcher.php] line[194] message:[controller pool empty for App\HttpController\Test]
+18-12-10 22:12:21:Exception at file[/app/zor/app/HttpController/Test.php] line[17] message:[Class 'App\HttpController\ServerManager' not found]
+18-12-10 22:36:39:Exception at file[/app/zor/bin/bin.php] line[31] message:[swoole exit.]
+18-12-10 23:16:31:Exception at file[/app/zor/src/Core.php] line[207] message:[Call to undefined function Zor\c()]
+18-12-10 23:19:01:Exception at file[/app/zor/bin/bin.php] line[35] message:[swoole exit.]

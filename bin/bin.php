@@ -28,7 +28,11 @@ class Install
 }
 function d(...$arg):void
 {
-    var_dump(...$arg);die;
+    var_dump(...$arg);
+}
+function e(...$arg):void
+{
+    var_dump(...$arg);exit;
 }
 $env_file = ROOT_PATH.'/dev.env';
 \Zor\Config::getInstance()->loadEnv($env_file);
@@ -68,8 +72,7 @@ Install::showTag('swoole version', phpversion('swoole'));
 Install::showTag('php version', phpversion());
 //创建主服务
 \Zor\Core::getInstance()->createServer();
-//$conf = \Zor\Config::getInstance()->getConf();
-//d($conf);
+
 \Zor\Core::getInstance()->start();
 
 

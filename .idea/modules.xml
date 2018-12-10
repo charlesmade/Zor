@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../easyswoole/.idea/easyswoole.iml" filepath="$PROJECT_DIR$/../easyswoole/.idea/easyswoole.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/zor.iml" filepath="$PROJECT_DIR$/.idea/zor.iml" />
     </modules>
   </component>
 </project>

@@ -100,7 +100,7 @@ class Core
             cli_set_process_title($name);
         }
         //注册fastCache进程
-        Cache::getInstance()->__run();
+//        Cache::getInstance()->__run();
         ServerManager::getInstance()->start();
     }
 

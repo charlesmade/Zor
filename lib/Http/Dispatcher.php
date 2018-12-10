@@ -68,11 +68,9 @@ class Dispatcher
     public function dispatch(Request $request,Response $response):void
     {
         $path = UrlParser::pathInfo($request->getUri()->getPath());
-
         if($this->router instanceof GroupCountBased){
             $handler = null;
             $routeInfo = $this->router->dispatch($request->getMethod(),$path);
-            d($this->router,$routeInfo,$request->getMethod(),$path);
             if($routeInfo !== false){
                 switch ($routeInfo[0]) {
                     case \FastRoute\Dispatcher::NOT_FOUND:{
@@ -89,6 +87,7 @@ class Dispatcher
                         if(is_callable($func)){
                             try{
                                 call_user_func_array($func,array_merge([$request,$response],array_values($vars)));
+                                d($response->isEndResponse());
                                 if ($response->isEndResponse()) {
                                     return;
                                 }
@@ -100,6 +99,7 @@ class Dispatcher
                         }else if(is_string($func)){
                             $path = $func;
                             $data = $request->getQueryParams();
+                            d($data);
                             $request->withQueryParams($vars+$data);
                             $pathInfo = UrlParser::pathInfo($func);
                             $request->getUri()->withPath($pathInfo);
@@ -136,7 +136,6 @@ class Dispatcher
         if($response->isEndResponse()){
             return;
         }
-
         dispatch :{
             $this->controllerHandler($request,$response,$path);
         };

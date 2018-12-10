@@ -8,11 +8,27 @@
 
 namespace App\HttpController;
 
+use Lib\Http\AbstractInterface\Controller;
+use Zor\ServerManager;
 
-class Test
+class Test extends Controller
 {
-    function UseIt()
+    function index()
     {
-        d('11111');
+        $ip = ServerManager::getInstance()->getSwooleServer()->connection_info($this->request()->getSwooleRequest()->fd);
+//        var_dump($ip);
+        $this->response()->write('your ip:'.$ip['remote_ip']);
+        $this->response()->write('Index Controller is run');
+        // TODO: Implement index() method.
+    }
+
+    function test()
+    {
+        $this->response()->write("router test");
+    }
+
+    function jp()
+    {
+        $this->response()->write("router jump");
     }
 }
