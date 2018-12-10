@@ -1,0 +1,5 @@
+18-12-10 17:56:57:Exception at file[/app/zor/src/Core.php] line[213] message:[Cannot call abstract method Zor\AbstractInterface\Event::afterRequest()]
+18-12-10 17:57:38:Exception at file[/app/zor/src/Core.php] line[213] message:[Cannot call abstract method Zor\AbstractInterface\Event::afterRequest()]
+18-12-10 18:06:43:Exception at file[/app/zor/src/Core.php] line[206] message:[Cannot call abstract method Zor\AbstractInterface\Event::onRequest()]
+18-12-10 18:06:43:Exception at file[/app/zor/src/Core.php] line[213] message:[Cannot call abstract method Zor\AbstractInterface\Event::afterRequest()]
+18-12-10 18:11:16:Exception at file[/app/zor/bin/bin.php] line[31] message:[swoole exit.]

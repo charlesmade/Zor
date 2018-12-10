@@ -1,0 +1,33 @@
+18-12-10 17:59:58:Error at file[/app/zor/bin/bin.php] line[31] message:[Uncaught ArgumentCountError: Too few arguments to function Zor\Core::Zor\{closure}(), 0 passed and exactly 3 expected in /app/zor/src/Core.php:193
+Stack trace:
+#0 [internal function]: Zor\Core->Zor\{closure}()
+#1 /app/zor/src/Core.php(210): call_user_func(Object(Closure))
+#2 {main}
+
+Next Swoole\ExitException: swoole exit. in /app/zor/bin/bin.php:31
+Stack trace:
+#0 /app/zor/src/Core.php(215): d(Object(Closure))
+#1 {main}
+  thrown]
+18-12-10 18:02:35:Error at file[/app/zor/bin/bin.php] line[31] message:[Uncaught ArgumentCountError: Too few arguments to function Zor\Core::Zor\{closure}(), 0 passed and exactly 3 expected in /app/zor/src/Core.php:193
+Stack trace:
+#0 [internal function]: Zor\Core->Zor\{closure}()
+#1 /app/zor/src/Core.php(210): call_user_func(Object(Closure))
+#2 {main}
+
+Next Swoole\ExitException: swoole exit. in /app/zor/bin/bin.php:31
+Stack trace:
+#0 /app/zor/src/Core.php(215): d(Object(Closure))
+#1 {main}
+  thrown]
+18-12-10 18:05:41:Error at file[/app/zor/bin/bin.php] line[31] message:[Uncaught ArgumentCountError: Too few arguments to function Zor\Core::Zor\{closure}(), 0 passed and exactly 3 expected in /app/zor/src/Core.php:193
+Stack trace:
+#0 [internal function]: Zor\Core->Zor\{closure}()
+#1 /app/zor/src/Core.php(210): call_user_func(Object(Closure))
+#2 {main}
+
+Next Swoole\ExitException: swoole exit. in /app/zor/bin/bin.php:31
+Stack trace:
+#0 /app/zor/src/Core.php(215): d(Object(Closure))
+#1 {main}
+  thrown]

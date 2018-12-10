@@ -1,0 +1,19 @@
+{
+    "name": "zor/zor",
+    "require": {
+        "php": ">=7.1.0",
+        "ext-swoole": ">=4.2.6",
+        "dragonmantank/cron-expression": "^2.2",
+        "nikic/fast-route": "v1.3",
+        "jeremeamia/superclosure": "^2.4"
+    },
+    "require-dev": {
+        "easyswoole/swoole-ide-helper": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zor\\": "src/",
+            "Lib\\": "lib/"
+        }
+    }
+}
