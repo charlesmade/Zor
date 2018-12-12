@@ -29,6 +29,7 @@ class Response extends MessageResponse
         $this->response = $response;
         parent::__construct();
         $this->withAddedHeader('Server','ZorServer');
+        $this->withAddedHeader('Content-Type','text/html;charset=utf-8'); //add content type
     }
 
     function end($status = self::STATUS_LOGICAL_END){
@@ -56,7 +57,6 @@ class Response extends MessageResponse
                 $this->response->cookie($cookie->getName(),$cookie->getValue(),$cookie->getExpire(),$cookie->getPath(),$cookie->getDomain(),$cookie->isSecure(),$cookie->isHttpOnly());
             }
             $write = $this->getBody()->__toString();
-
             if($write !== ''){
                 $this->response->write($write);
             }

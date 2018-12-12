@@ -173,19 +173,12 @@ class Core
             });
         }else{
             $namespace = Di::getInstance()->get(SysConst::HTTP_CONTROLLER_NAMESPACE);
-            if(empty($namespace)){
-                $namespace = 'App\\HttpController\\';
-            }
+            if(empty($namespace))$namespace = 'App\\HttpController\\';
             $depth = intval(Di::getInstance()->get(SysConst::HTTP_CONTROLLER_MAX_DEPTH));
             $depth = $depth > 5 ? $depth : 5;
-            $max = intval(Di::getInstance()->get(SysConst::HTTP_CONTROLLER_POOL_MAX_NUM));
-            if($max == 0){
-                $max = 15;
-            }
-            $waitTime = intval(Di::getInstance()->get(SysConst::HTTP_CONTROLLER_POOL_WAIT_TIME));
-            if($waitTime == 0){
-                $waitTime = 5;
-            }
+            $max = intval(Di::getInstance()->get(SysConst::HTTP_CONTROLLER_POOL_MAX_NUM)) ?: 15;
+            $waitTime = intval(Di::getInstance()->get(SysConst::HTTP_CONTROLLER_POOL_WAIT_TIME)) ?: 5;
+
             $dispatcher = new Dispatcher($namespace,$depth,$max);
             $dispatcher->setControllerPoolWaitTime($waitTime);
             $httpExceptionHandler = Di::getInstance()->get(SysConst::HTTP_EXCEPTION_HANDLER);
@@ -327,7 +320,7 @@ class Core
         EventHelper::registerWithAdd(ServerManager::getInstance()->getMainEventRegister(),EventRegister::onWorkerStart,function (\swoole_server $server,$workerId){
             if(PHP_OS != 'Darwin'){
                 $name = Config::getInstance()->getConf('SERVER_NAME');
-                if( ($workerId < Config::getInstance()->getConf('MAIN_SERVER.SETTING.worker_num')) && $workerId >= 0){
+                if(($workerId < Config::getInstance()->getConf('MAIN_SERVER.SETTING.worker_num')) && $workerId >= 0){
                     $type = 'Worker';
                 }else{
                     $type = 'TaskWorker';

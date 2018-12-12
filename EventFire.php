@@ -13,6 +13,9 @@ use Zor\Swoole\EventRegister;
 use Zor\AbstractInterface\Event;
 use Lib\Http\Request;
 use Lib\Http\Response;
+use Lib\Component\Pool\PoolManager;
+use Lib\Data\Pool\RedisPool;
+use Lib\Data\Pool\MysqlPool;
 
 class EventFire implements Event
 {
@@ -21,6 +24,12 @@ class EventFire implements Event
     {
         // TODO: Implement initialize() method.
         date_default_timezone_set('Asia/Shanghai');
+
+        // 注册redis连接池
+        PoolManager::getInstance()->register(RedisPool::class, Config::getInstance()->getConf('REDIS.POOL_MAX_NUM'));
+
+        // 注册mysql数据库连接池
+        PoolManager::getInstance()->register(MysqlPool::class, Config::getInstance()->getConf('MYSQL.POOL_MAX_NUM'));
     }
 
     public static function mainServerCreate(EventRegister $register)

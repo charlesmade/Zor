@@ -6,7 +6,7 @@
  * Time: 上午12:54
  */
 
-namespace EasySwoole\Mysqli\Exceptions;
+namespace Lib\Mysqli\Exceptions;
 
 
 class PrepareQueryFail extends \Exception

@@ -6,7 +6,7 @@
  * Time: 上午12:58
  */
 
-namespace EasySwoole\Mysqli\Exceptions;
+namespace Lib\Mysqli\Exceptions;
 
 
 class OrderByFail extends \Exception

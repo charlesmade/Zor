@@ -94,13 +94,7 @@ abstract class AbstractPool
             $this->objHash[$key] = true;
             $obj->last_use_time = time();
             if($obj instanceof PoolObjectInterface){
-                $status = false;
-                try{
-                    $status = $obj->beforeUse();
-                }catch (\Throwable $throwable){
-
-                }
-                if($status == false){
+                if($obj->beforeUse() == false){
                     $this->unsetObj($obj);
                     //重新进入对象获取
                     return $this->getObj($timeout,$tryTimes - 1);

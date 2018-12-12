@@ -6,7 +6,7 @@
  * Time: 下午9:30
  */
 
-namespace EasySwoole\Mysqli\Exceptions;
+namespace Lib\Mysqli\Exceptions;
 
 
 class Option extends \Exception

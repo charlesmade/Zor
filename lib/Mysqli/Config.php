@@ -6,10 +6,10 @@
  * Time: 上午11:28
  */
 
-namespace EasySwoole\Mysqli;
+namespace Lib\Mysqli;
 
 
-use EasySwoole\Spl\SplBean;
+use Lib\Spl\SplBean;
 
 class Config extends SplBean
 {

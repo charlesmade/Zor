@@ -42,7 +42,7 @@ Install::showTag('listen address', $conf->getConf('MAIN_SERVER.LISTEN_ADDRESS'))
 Install::showTag('listen port', $conf->getConf('MAIN_SERVER.PORT'));
 \Zor\Core::getInstance()->initialize();
 
-//$conf->setConf("MAIN_SERVER.SETTING.daemonize", true);
+if(in_array('d', $argv) && array_search('d', $argv) == count($argv) - 1) $conf->setConf("MAIN_SERVER.SETTING.daemonize", true);
 $list  = \Zor\ServerManager::getInstance()->getSubServerRegister();
 $index = 1;
 foreach ($list as $serverName => $item){

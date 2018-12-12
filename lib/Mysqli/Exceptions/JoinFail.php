@@ -6,7 +6,7 @@
  * Time: 上午12:38
  */
 
-namespace EasySwoole\Mysqli\Exceptions;
+namespace Lib\Mysqli\Exceptions;
 
 
 class JoinFail extends \Exception

@@ -87,7 +87,6 @@ class Dispatcher
                         if(is_callable($func)){
                             try{
                                 call_user_func_array($func,array_merge([$request,$response],array_values($vars)));
-                                d($response->isEndResponse());
                                 if ($response->isEndResponse()) {
                                     return;
                                 }
@@ -99,7 +98,6 @@ class Dispatcher
                         }else if(is_string($func)){
                             $path = $func;
                             $data = $request->getQueryParams();
-                            d($data);
                             $request->withQueryParams($vars+$data);
                             $pathInfo = UrlParser::pathInfo($func);
                             $request->getUri()->withPath($pathInfo);

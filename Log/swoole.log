@@ -1,2 +1,29 @@
 [2018-12-10 14:11:25 *68.4]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Class 'App\HttpController\Controller' not found in /app/zor/app/HttpController/Test.php on line 13.
 [2018-12-10 14:11:25 $53.0]	WARNING	swManager_check_exit_status: worker#4 abnormal exit, status=255, signal=0
+[2018-12-11 09:00:39 #54.2]	NOTICE	Server is shutdown now.
+[2018-12-11 10:07:33 #78.2]	NOTICE	Server is shutdown now.
+[2018-12-11 10:10:57 #103.2]	NOTICE	Server is shutdown now.
+array(0) {
+}
+array(0) {
+}
+array(0) {
+}
+array(0) {
+}
+array(0) {
+}
+array(0) {
+}
+array(0) {
+}
+array(0) {
+}
+array(0) {
+}
+array(0) {
+}
+[2018-12-12 03:27:28 #126.2]	NOTICE	Server is shutdown now.
+[2018-12-12 03:27:37 #149.2]	NOTICE	Server is shutdown now.
+[2018-12-12 09:34:47 *1969.2]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Cannot redeclare static App\Model\BaseModel::$tableName as non static App\Model\articleDetailModel::$tableName in /app/zor/app/Model/articleDetailModel.php on line 12.
+[2018-12-12 09:34:47 $1956.0]	WARNING	swManager_check_exit_status: worker#2 abnormal exit, status=255, signal=0

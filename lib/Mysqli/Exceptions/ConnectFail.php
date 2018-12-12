@@ -6,7 +6,7 @@
  * Time: 上午12:14
  */
 
-namespace EasySwoole\Mysqli\Exceptions;
+namespace Lib\Mysqli\Exceptions;
 
 
 class ConnectFail extends \Exception
