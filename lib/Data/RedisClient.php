@@ -32,7 +32,7 @@ class RedisClient
         return $this->redisDb;
     }
 
-    function set($key, $value, $ttl = null)
+    function set(string $key, $value, $ttl = null)
     {
         if(!is_null($ttl))
             return $this->getDb()->set($key,$value,$ttl);
@@ -40,17 +40,21 @@ class RedisClient
             return $this->getDb()->set($key,$value);
     }
 
-    function del($key)
+    function del(string $key)
     {
         if(!is_null($key))
             return $this->getDb()->del($key);
         return true;
     }
 
+    function get(string $key)
+    {
+        return $this->getDb()->get($key);
+    }
+
     function __destruct()
     {
         // TODO: Implement __destruct() method.
-        $this->redisDb->gc();
-        unset($this->redisDb);
+        PoolManager::getInstance()->getPool(RedisPool::class)->recycleObj($this->redisDb);
     }
 }

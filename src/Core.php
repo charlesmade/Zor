@@ -36,15 +36,7 @@ class Core
     function __construct()
     {
         defined('SWOOLE_VERSION') or define('SWOOLE_VERSION',intval(phpversion('swoole')));
-        defined('BASE_PATH') or define('BASE_PATH',realpath(getcwd()));
-    }
-
-    function setIsDev(bool $isDev)
-    {
-        $this->isDev = $isDev;
-        //变更这里的时候，例如在全局的事件里面修改的，，重新加载配置项
-        $this->loadEnv();
-        return $this;
+        defined('ROOT_PATH') or define('ROOT_PATH',realpath(getcwd()));
     }
 
     function isDev():bool
@@ -109,7 +101,7 @@ class Core
         //创建临时目录    请以绝对路径，不然守护模式运行会有问题
         $tempDir = Config::getInstance()->getConf('TEMP_DIR');
         if(empty($tempDir)){
-            $tempDir = BASE_PATH.'/Temp';
+            $tempDir = ROOT_PATH.'/temp';
             Config::getInstance()->setConf('TEMP_DIR',$tempDir);
         }
         if(!is_dir($tempDir)){
@@ -119,7 +111,7 @@ class Core
 
         $logDir = Config::getInstance()->getConf('LOG_DIR');
         if(empty($logDir)){
-            $logDir = BASE_PATH.'/Log';
+            $logDir = ROOT_PATH.'/log';
             Config::getInstance()->setConf('LOG_DIR',$logDir);
         }
         if(!is_dir($logDir)){
@@ -172,8 +164,10 @@ class Core
                 EventFire::onReceive($server,$fd,$reactor_id,$data);
             });
         }else{
-            $namespace = Di::getInstance()->get(SysConst::HTTP_CONTROLLER_NAMESPACE);
-            if(empty($namespace))$namespace = 'App\\HttpController\\';
+            $module = Config::getInstance()->getConf('MODULE_DIR') ?: 'App';
+            $controller = Di::getInstance()->get(SysConst::HTTP_CONTROLLER_NAMESPACE) ?: 'HttpController';
+            $namespace = $module . '\\' . $controller . '\\';
+            defined('MODULE_DIR') or define('MODULE_DIR',$module);
             $depth = intval(Di::getInstance()->get(SysConst::HTTP_CONTROLLER_MAX_DEPTH));
             $depth = $depth > 5 ? $depth : 5;
             $max = intval(Di::getInstance()->get(SysConst::HTTP_CONTROLLER_POOL_MAX_NUM)) ?: 15;

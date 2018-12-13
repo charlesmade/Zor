@@ -21,6 +21,9 @@ class Router extends AbstractRouter
         $routeCollector->get('/test','/test/index');
         $routeCollector->get('/hide','/test/test');
         $routeCollector->get('/','/');
+        $routeCollector->get('/redis','/index/useRedisDemo');
+        $routeCollector->get('/view','/testView/index');
+        $routeCollector->get('/user','/testView/user');
 
         // TODO：Set Not Found & Not Allowed Call Method
         $this->setRouterNotFoundCallBack(function(Request $request, Response $response) {

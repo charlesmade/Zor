@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>name: {$name}</div>
+    <div>sex: {$sex}</div>
+    <ul>
+        {foreach $article_list as $v}
+            <li>
+                <div>
+                    title: {$v.title}
+                </div>
+                <div>
+                    article: {$v.article}
+                </div>
+                <div>
+                    view_count: {$v.view_count}
+                </div>
+            </li>
+        {/foreach}
+    </ul>
+</body>
+</html>

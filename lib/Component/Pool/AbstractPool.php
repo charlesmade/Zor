@@ -58,7 +58,12 @@ abstract class AbstractPool
         }
     }
 
-    public function getObj(float $timeout = null,int $tryTimes = 3)
+    /**
+     * @param float|null $timeout
+     * @param int $tryTimes
+     * @return mixed|null
+     */
+    public function getObj(float $timeout = null, int $tryTimes = 3)
     {
         if($timeout === null){
             $timeout = $this->conf->getGetObjectTimeout();

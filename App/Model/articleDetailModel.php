@@ -11,6 +11,6 @@ namespace App\Model;
 
 class articleDetailModel extends BaseModel
 {
-    public static $tableName = 'article_detail';
+    public $tableName = 'article_detail';
 
 }

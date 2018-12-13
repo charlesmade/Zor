@@ -185,7 +185,7 @@ class Session
     private function resetStatus()
     {
         $this->sid = null;
-        $this->sessionName = 'EasySwoole';
+        $this->sessionName = 'ZorServer';
         $this->savePath = null;
         $this->data = [];
     }

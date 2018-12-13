@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <ul>
+        {foreach $user_list as $v}
+            <li>
+                <div>
+                    id: {$v.id}
+                </div>
+                <div>
+                    username: {$v.username}
+                </div>
+                <div>
+                    password: {$v.password}
+                </div>
+                <div>
+                    sex:
+                    {if $v.sex != 0}
+                        nan
+                    {else}
+                        nv
+                    {/if}
+                </div>
+            </li>
+        {/foreach}
+    </ul>
+</body>
+</html>

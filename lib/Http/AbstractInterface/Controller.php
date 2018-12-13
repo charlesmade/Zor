@@ -161,11 +161,6 @@ abstract class Controller
         return simplexml_load_string($this->request()->getBody()->__toString(), $className,$options);
     }
 
-    protected function validate(Validate $validate)
-    {
-        return $validate->validate($this->request()->getRequestParam());
-    }
-
     protected function session(\SessionHandlerInterface $sessionHandler = null):Session
     {
         if($this->session == null){

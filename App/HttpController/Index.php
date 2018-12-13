@@ -12,34 +12,32 @@ namespace App\HttpController;
 use App\Model\articleDetailModel;
 use Lib\Data\RedisClient;
 use Lib\Http\AbstractInterface\Controller;
+use Lib\Http\Response;
+use Lib\Http\Request;
 
 class Index extends Controller
 {
     function index()
     {
         // TODO: Implement index() method.
-//        $models = new articleDetailModel();
-//        $arr = $models->getDb()->get();
-//        d(1,$arr);
-//        $arr1 = $models->getDb()->get();
-//        d(2,$arr1);
-//        $arr2 = articleDetailModel::db()->get();
-//        d(3,$arr2);
-//        $arr3 = $models->getDb()->get();
-//        d(4,$arr3);
-//        $bool = $models->getDb()->where('id',2,'=')->delete();
-//        d(5,$bool);
-//        $arr4 = $models->getDb()->get();
-//        d(6,$arr4);
-//        $arr5 = $models->getDb()->get();
-//        d(7,$arr5);
-//        $arr6 = articleDetailModel::db()->get();
-//        d(8,$arr6);
-//        $arr7 = $models->getDb()->get();
-//        d(9,$arr7);
+        $this->response()->write("router test");
+    }
 
-        $redis = new RedisClient();
-        $redis->del('name');
-        $redis->del('sex');
+    function useMysqlDemo()
+    {
+        $models = new articleDetailModel();
+        $arr = $models->getDb()->get();
+        //        $arr2 = articleDetailModel::db()->get();
+        //        d(3,$arr2);
+    }
+
+    function useRedisDemo()
+    {
+        for ($i = 1; $i < 20; $i++) {
+            $name = "redis$i";
+            $name = new RedisClient();
+            echo $i.PHP_EOL;
+        }
+        $this->response()->write("write end!");
     }
 }
