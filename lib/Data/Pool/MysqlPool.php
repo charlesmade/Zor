@@ -13,7 +13,7 @@ class MysqlPool extends AbstractPool
      */
     protected function createObject()
     {
-        $conf = Config::getInstance()->getConf("MYSQL");
+        $conf = $GLOBALS['conf']->getConf("MYSQL");
         $dbConf = new MysqlConfig($conf);
         return new MysqlSource($dbConf);
     }

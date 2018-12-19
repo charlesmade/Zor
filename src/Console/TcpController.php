@@ -18,7 +18,7 @@ class TcpController extends Controller
     function onRequest(?string $actionName): bool
     {
         $fd = $this->caller()->getClient()->getFd();
-        $authKey = Config::getInstance()->getConf('CONSOLE.AUTH');
+        $authKey = $GLOBALS['conf']->getConf('CONSOLE.AUTH');
         //如果开启了权限验证
         if (!empty($authKey)) {
             $info = TableManager::getInstance()->get(TcpService::$__swooleTableName)->get($fd);

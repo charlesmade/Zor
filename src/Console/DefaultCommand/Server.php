@@ -170,7 +170,7 @@ HELP;
     private function serverList(Caller $caller, Response $response)
     {
         $serverInfo = [];
-        $conf = Config::getInstance()->getConf('MAIN_SERVER');
+        $conf = $GLOBALS['conf']->getConf('MAIN_SERVER');
         $serverInfo[] = [ 'serverName' => 'mainServer', 'serverType' => $conf['SERVER_TYPE'], 'serverHost' => $conf['LISTEN_ADDRESS'], 'listenPort' => $conf['PORT'] ];
         $list = ServerManager::getInstance()->getSubServerRegister();
         foreach ($list as $serverName => $item) {
@@ -192,13 +192,13 @@ HELP;
         $args = $caller->getArgs();
         $command = array_shift($args);
         if ($command == 'enable') {
-            Config::getInstance()->setDynamicConf('CONSOLE.PUSH_LOG', true);
+            $GLOBALS['conf']->setDynamicConf('CONSOLE.PUSH_LOG', true);
             $str = 'enable console push log';
         } else if ($command == 'disable') {
-            Config::getInstance()->setDynamicConf('CONSOLE.PUSH_LOG', false);
+            $GLOBALS['conf']->setDynamicConf('CONSOLE.PUSH_LOG', false);
             $str = 'disable console push log';
         } else {
-            $status = Config::getInstance()->getDynamicConf('CONSOLE.PUSH_LOG');
+            $status = $GLOBALS['conf']->getDynamicConf('CONSOLE.PUSH_LOG');
             $str = 'console push log is ' . ($status ? 'enable' : 'disable');
         }
         $response->setMessage($str);

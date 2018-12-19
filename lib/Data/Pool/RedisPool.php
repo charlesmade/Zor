@@ -11,7 +11,7 @@ class RedisPool extends AbstractPool
     {
         // TODO: Implement createObject() method.
         $redis = new RedisSource();
-        $conf = Config::getInstance()->getConf('REDIS');
+        $conf = $GLOBALS['conf']->getConf('REDIS');
         if( $redis->connect($conf['host'],$conf['port'])){
             if(!empty($conf['auth'])){
                 $redis->auth($conf['auth']);

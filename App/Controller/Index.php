@@ -6,7 +6,7 @@
  * Time: 11:25
  */
 
-namespace App\HttpController;
+namespace App\Controller;
 
 
 use App\Model\articleDetailModel;

@@ -41,7 +41,7 @@ class Mysql
 
     private function getDbSource():?MysqlSource
     {
-        return PoolManager::getInstance()->getPool(MysqlPool::class)->getObj(Config::getInstance()->getConf('MYSQL.POOL_TIME_OUT'));
+        return PoolManager::getInstance()->getPool(MysqlPool::class)->getObj($GLOBALS['conf']->getConf('MYSQL.POOL_TIME_OUT'));
     }
 
     //获取表名

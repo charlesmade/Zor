@@ -26,6 +26,9 @@ use Zor\Swoole\PipeMessage\Message;
 use Zor\Swoole\PipeMessage\OnCommand;
 use Zor\Swoole\Task\AbstractAsyncTask;
 use Zor\Swoole\Task\SuperClosure;
+use Lib\Data\Pool\MysqlPool;
+use Lib\Data\Pool\RedisPool;
+use Lib\Component\Pool\PoolManager;
 
 class Core
 {
@@ -37,11 +40,6 @@ class Core
     {
         defined('SWOOLE_VERSION') or define('SWOOLE_VERSION',intval(phpversion('swoole')));
         defined('ROOT_PATH') or define('ROOT_PATH',realpath(getcwd()));
-    }
-
-    function isDev():bool
-    {
-        return $this->isDev;
     }
 
     function initialize()
@@ -63,7 +61,9 @@ class Core
             die('global event file missing');
         }
         //执行框架初始化事件
-        EventFire::initialize();
+//        EventFire::initialize();
+        date_default_timezone_set('Asia/Shanghai');
+        $this->initDataService();
         //临时文件和Log目录初始化
         $this->sysDirectoryInit();
         //注册错误回调
@@ -71,16 +71,29 @@ class Core
         return $this;
     }
 
+    private function initDataService()
+    {
+        // 注册redis连接池
+        $redisPoolNum = $GLOBALS['conf']->getConf('REDIS.POOL_MAX_NUM');
+        if ($redisPoolNum)
+            PoolManager::getInstance()->register(RedisPool::class, $redisPoolNum);
+
+        // 注册mysql数据库连接池
+        $mysqlPoolNum = $GLOBALS['conf']->getConf('MYSQL.POOL_MAX_NUM');
+        if ($mysqlPoolNum)
+            PoolManager::getInstance()->register(MysqlPool::class, $mysqlPoolNum);
+    }
+
     function createServer()
     {
-        $conf = Config::getInstance()->getConf('MAIN_SERVER');
+        $conf = $GLOBALS['conf']->getConf('MAIN_SERVER');
         ServerManager::getInstance()->createSwooleServer(
             $conf['PORT'],$conf['SERVER_TYPE'],$conf['LISTEN_ADDRESS'],$conf['SETTING'],$conf['RUN_MODEL'],$conf['SOCK_TYPE']
         );
         $this->registerDefaultCallBack(ServerManager::getInstance()->getSwooleServer(),$conf['SERVER_TYPE']);
-        EventFire::mainServerCreate(ServerManager::getInstance()->getMainEventRegister());
+//        EventFire::mainServerCreate(ServerManager::getInstance()->getMainEventRegister());
         //创建主服务后，创建Tcp子服务
-        (new TcpService(Config::getInstance()->getConf('CONSOLE')));
+//        (new TcpService($GLOBALS['conf']->getConf('CONSOLE')));
         return $this;
     }
 
@@ -88,7 +101,7 @@ class Core
     {
         //给主进程也命名
         if(PHP_OS != 'Darwin'){
-            $name = Config::getInstance()->getConf('SERVER_NAME');
+            $name = $GLOBALS['conf']->getConf('SERVER_NAME');
             cli_set_process_title($name);
         }
         //注册fastCache进程
@@ -99,20 +112,20 @@ class Core
     private function sysDirectoryInit():void
     {
         //创建临时目录    请以绝对路径，不然守护模式运行会有问题
-        $tempDir = Config::getInstance()->getConf('TEMP_DIR');
+        $tempDir = $GLOBALS['conf']->getConf('TEMP_DIR');
         if(empty($tempDir)){
             $tempDir = ROOT_PATH.'/temp';
-            Config::getInstance()->setConf('TEMP_DIR',$tempDir);
+            $GLOBALS['conf']->setConf('TEMP_DIR',$tempDir);
         }
         if(!is_dir($tempDir)){
             mkdir($tempDir);
         }
         defined('TEMP_DIR') or define('TEMP_DIR',$tempDir);
 
-        $logDir = Config::getInstance()->getConf('LOG_DIR');
+        $logDir = $GLOBALS['conf']->getConf('LOG_DIR');
         if(empty($logDir)){
             $logDir = ROOT_PATH.'/log';
-            Config::getInstance()->setConf('LOG_DIR',$logDir);
+            $GLOBALS['conf']->setConf('LOG_DIR',$logDir);
         }
         if(!is_dir($logDir)){
             mkdir($logDir);
@@ -120,8 +133,8 @@ class Core
         defined('LOG_DIR') or define('LOG_DIR',$logDir);
 
         //设置默认文件目录值
-        Config::getInstance()->setConf('MAIN_SERVER.SETTING.pid_file',$tempDir.'/pid.pid');
-        Config::getInstance()->setConf('MAIN_SERVER.SETTING.log_file',$logDir.'/swoole.log');
+        $GLOBALS['conf']->setConf('MAIN_SERVER.SETTING.pid_file',$tempDir.'/pid.pid');
+        $GLOBALS['conf']->setConf('MAIN_SERVER.SETTING.log_file',$logDir.'/swoole.log');
         //设置目录
         Logger::getInstance($logDir);
     }
@@ -159,19 +172,19 @@ class Core
     private function registerDefaultCallBack(\swoole_server $server,string $serverType)
     {
         //如果主服务仅仅是swoole server，那么设置默认onReceive为全局的onReceive
-        if($serverType === ServerManager::TYPE_SERVER){
-            $server->on(EventRegister::onReceive,function (\swoole_server $server, int $fd, int $reactor_id, string $data){
-                EventFire::onReceive($server,$fd,$reactor_id,$data);
-            });
-        }else{
-            $module = Config::getInstance()->getConf('MODULE_DIR') ?: 'App';
-            $controller = Di::getInstance()->get(SysConst::HTTP_CONTROLLER_NAMESPACE) ?: 'HttpController';
+//        if($serverType === ServerManager::TYPE_SERVER){
+//            $server->on(EventRegister::onReceive,function (\swoole_server $server, int $fd, int $reactor_id, string $data){
+//                EventFire::onReceive($server,$fd,$reactor_id,$data);
+//            });
+//        }else{
+            $module = $GLOBALS['conf']->getConf('MODULE_DIR') ?: 'App';
+            $controller = Di::getInstance()->get(SysConst::HTTP_CONTROLLER_NAMESPACE) ?: 'Controller';
             $namespace = $module . '\\' . $controller . '\\';
             defined('MODULE_DIR') or define('MODULE_DIR',$module);
-            $depth = intval(Di::getInstance()->get(SysConst::HTTP_CONTROLLER_MAX_DEPTH));
+            $depth = intval($GLOBALS['conf']->getConf('HTTP_CONTROLLER_MAX_DEPTH'));
             $depth = $depth > 5 ? $depth : 5;
-            $max = intval(Di::getInstance()->get(SysConst::HTTP_CONTROLLER_POOL_MAX_NUM)) ?: 15;
-            $waitTime = intval(Di::getInstance()->get(SysConst::HTTP_CONTROLLER_POOL_WAIT_TIME)) ?: 5;
+            $max = intval($GLOBALS['conf']->getConf('HTTP_CONTROLLER_POOL_MAX_NUM')) ?: 15;
+            $waitTime = intval($GLOBALS['conf']->getConf('HTTP_CONTROLLER_POOL_WAIT_TIME')) ?: 5;
 
             $dispatcher = new Dispatcher($namespace,$depth,$max);
             $dispatcher->setControllerPoolWaitTime($waitTime);
@@ -204,7 +217,7 @@ class Core
                 }
                 $response_psr->__response();
             });
-        }
+//        }
         //注册默认的on task,finish  不经过 event register。因为on task需要返回值。不建议重写onTask,否则es自带的异步任务事件失效
         EventHelper::on($server,EventRegister::onTask,function (\swoole_server $server, $taskId, $fromWorkerId,$taskObj){
             if(is_string($taskObj) && class_exists($taskObj)){
@@ -313,8 +326,8 @@ class Core
         //注册默认的worker start
         EventHelper::registerWithAdd(ServerManager::getInstance()->getMainEventRegister(),EventRegister::onWorkerStart,function (\swoole_server $server,$workerId){
             if(PHP_OS != 'Darwin'){
-                $name = Config::getInstance()->getConf('SERVER_NAME');
-                if(($workerId < Config::getInstance()->getConf('MAIN_SERVER.SETTING.worker_num')) && $workerId >= 0){
+                $name = $GLOBALS['conf']->getConf('SERVER_NAME');
+                if(($workerId < $GLOBALS['conf']->getConf('MAIN_SERVER.SETTING.worker_num')) && $workerId >= 0){
                     $type = 'Worker';
                 }else{
                     $type = 'TaskWorker';

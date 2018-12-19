@@ -16,7 +16,7 @@ abstract class ViewController extends Controller
     public function onRequest(?string $action): ?bool
     {
         $this->view = new \Smarty();
-        $tempPath   = Config::getInstance()->getConf('TEMP_DIR');    # 临时文件目录
+        $tempPath   = $GLOBALS['conf']->getConf('TEMP_DIR');    # 临时文件目录
         $this->view->setCompileDir("{$tempPath}/templates_c/");      # 模板编译目录
         $this->view->setCacheDir("{$tempPath}/cache/");              # 模板缓存目录
         $this->view->setTemplateDir(ROOT_PATH .'/'.MODULE_DIR.'/'. '/Views/');    # 模板文件目录

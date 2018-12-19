@@ -26,10 +26,10 @@ class EventFire implements Event
         date_default_timezone_set('Asia/Shanghai');
 
         // 注册redis连接池
-        PoolManager::getInstance()->register(RedisPool::class, Config::getInstance()->getConf('REDIS.POOL_MAX_NUM'));
+        PoolManager::getInstance()->register(RedisPool::class, $GLOBALS['conf']->getConf('REDIS.POOL_MAX_NUM'));
 
         // 注册mysql数据库连接池
-        PoolManager::getInstance()->register(MysqlPool::class, Config::getInstance()->getConf('MYSQL.POOL_MAX_NUM'));
+        PoolManager::getInstance()->register(MysqlPool::class, $GLOBALS['conf']->getConf('MYSQL.POOL_MAX_NUM'));
     }
 
     public static function mainServerCreate(EventRegister $register)

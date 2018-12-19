@@ -22,7 +22,7 @@ class Cache
 
     function __construct()
     {
-        $this->processNum = Config::getInstance()->getConf('FAST_CACHE.PROCESS_NUM');
+        $this->processNum = $GLOBALS['conf']->getConf('FAST_CACHE.PROCESS_NUM');
     }
 
     function set($key,$value,float $timeout = 0.1)
@@ -187,7 +187,7 @@ class Cache
      */
     function __run()
     {
-        $this->serverName = Config::getInstance()->getConf('SERVER_NAME');
+        $this->serverName = $GLOBALS['conf']->getConf('SERVER_NAME');
         for( $i=0 ; $i < $this->processNum ; $i++){
             ServerManager::getInstance()->getSwooleServer()->addProcess((new CacheProcess("{$this->serverName}.FastCache.{$i}",['index'=>$i]))->getProcess());
         }

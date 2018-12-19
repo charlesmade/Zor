@@ -18,7 +18,7 @@ class RedisClient
 
     function __construct()
     {
-        $redisDb = PoolManager::getInstance()->getPool(RedisPool::class)->getObj(Config::getInstance()->getConf('REDIS.POOL_TIME_OUT'));
+        $redisDb = PoolManager::getInstance()->getPool(RedisPool::class)->getObj($GLOBALS['conf']->getConf('REDIS.POOL_TIME_OUT'));
         if ($redisDb instanceof RedisSource) {
             $this->redisDb = $redisDb;
         } else {

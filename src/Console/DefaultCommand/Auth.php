@@ -33,7 +33,7 @@ class Auth implements CommandInterface
     {
         $fd = $caller->getClient()->getFd();
         $args = $caller->getArgs();
-        if (Config::getInstance()->getConf('CONSOLE.AUTH') == array_shift($args)) {
+        if ($GLOBALS['conf']->getConf('CONSOLE.AUTH') == array_shift($args)) {
             TableManager::getInstance()->get(TcpService::$__swooleTableName)->set($fd, [
                 'isAuth'   => 1,
                 'tryTimes' => 0

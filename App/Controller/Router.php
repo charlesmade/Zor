@@ -6,7 +6,7 @@
  * Time: 23:20
  */
 
-namespace App\HttpController;
+namespace App\Controller;
 
 use Lib\Http\AbstractInterface\AbstractRouter;
 use FastRoute\RouteCollector;

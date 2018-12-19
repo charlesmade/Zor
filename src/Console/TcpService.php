@@ -61,9 +61,9 @@ class TcpService
                 $dispatcher->dispatch($server, $data, $fd, $reactor_id);
             });
             $sub->set($sub::onConnect, function (\swoole_server $server, int $fd, int $reactorId) {
-                $hello = 'Hello !' . GlobalConfig::getInstance()->getConf('SERVER_NAME');
+                $hello = 'Hello !' . Global$GLOBALS['conf']->getConf('SERVER_NAME');
                 $server->send($fd, TcpParser::pack($hello), $reactorId);
-                if (GlobalConfig::getInstance()->getConf('CONSOLE.AUTH')) {
+                if (Global$GLOBALS['conf']->getConf('CONSOLE.AUTH')) {
                     $server->send($fd, TcpParser::pack('please enter your auth key; auth $authKey'), $reactorId);
                 } else {
                     //在不需要鉴权的时候，全部用户都是允许的
@@ -77,7 +77,7 @@ class TcpService
                 TableManager::getInstance()->get(self::$__swooleTableName)->del($fd);
             });
         }
-        GlobalConfig::getInstance()->setDynamicConf('CONSOLE.PUSH_LOG', GlobalConfig::getInstance()->getConf('CONSOLE.PUSH_LOG'));
+        Global$GLOBALS['conf']->setDynamicConf('CONSOLE.PUSH_LOG', Global$GLOBALS['conf']->getConf('CONSOLE.PUSH_LOG'));
     }
 
     static function push(string $string)
@@ -86,7 +86,7 @@ class TcpService
         if ($table instanceof Table) {
             $string = TcpParser::pack($string);
             foreach ($table as $fd => $value) {
-                if (GlobalConfig::getInstance()->getConf('CONSOLE.AUTH') && $value['isAuth'] == 0) {
+                if (Global$GLOBALS['conf']->getConf('CONSOLE.AUTH') && $value['isAuth'] == 0) {
                     continue;
                 }
                 ServerManager::getInstance()->getSwooleServer()->send($fd, $string);

@@ -6,7 +6,7 @@
  * Time: 18:34
  */
 
-namespace App\HttpController;
+namespace App\Controller;
 
 use Lib\Http\AbstractInterface\Controller;
 use Zor\ServerManager;
